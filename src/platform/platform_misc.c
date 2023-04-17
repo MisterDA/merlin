@@ -1,6 +1,14 @@
-#ifdef _WIN32
+#include <caml/version.h>
+
+#if OCAML_VERSION < 50000
 #define CAML_NAME_SPACE
+#endif
+
+#ifdef _WIN32
+#if OCAML_VERSION < 41300
 #define CAML_INTERNALS
+#endif
+
 #include <caml/misc.h>
 #include <caml/osdeps.h>
 #include <caml/unixsupport.h>

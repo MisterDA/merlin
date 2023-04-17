@@ -1,3 +1,9 @@
+#include <caml/version.h>
+
+#if OCAML_VERSION < 50000
+#define CAML_NAME_SPACE
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

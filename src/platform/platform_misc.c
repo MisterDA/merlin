@@ -70,7 +70,7 @@ value ml_merlin_fs_exact_case_basename(value path)
   WIN32_FIND_DATAW fileinfo;
 
   wname = caml_stat_strdup_to_utf16(String_val(path));
-  h = FindFirstFileW(wname, &fileinfo);
+  h = FindFirstFile(wname, &fileinfo);
   caml_stat_free(wname);
 
   if (h == INVALID_HANDLE_VALUE) {
@@ -147,8 +147,8 @@ static int windows_system(wchar_t *cmd, wchar_t *cwd, DWORD *ret)
     s_info.hStdOutput = s_info.hStdError;
 
     flags = CREATE_NO_WINDOW | CREATE_UNICODE_ENVIRONMENT;
-    if (! CreateProcessW(NULL, cmd, NULL, NULL,
-                         TRUE, flags, NULL, cwd, &s_info, &p_info)) {
+    if (! CreateProcess(NULL, cmd, NULL, NULL,
+                        TRUE, flags, NULL, cwd, &s_info, &p_info)) {
         err = GetLastError();
     }
 

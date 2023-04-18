@@ -37,7 +37,7 @@ typedef SSIZE_T ssize_t;
 #include <caml/threads.h>
 
 #ifdef _MSC_VER
-extern __declspec(dllimport) char **environ;
+extern __declspec(dllimport) wchar_t **environ;
 #else
 extern char **environ;
 #endif
@@ -45,13 +45,8 @@ extern char **environ;
 CAMLprim value
 ml_merlin_set_environ(value venviron)
 {
-  static char *buffer = NULL;
-
-  const char *ptr = String_val(venviron);
+  char_os *ptr = caml_stat_strdup_to_os(String_val(venviron));
   size_t length = caml_string_length(venviron);
-
-  buffer = realloc(buffer, length);
-  memcpy(buffer, ptr, length);
 
   // clearenv() is not portable
   if (environ)
@@ -61,13 +56,14 @@ ml_merlin_set_environ(value venviron)
 
   for (i = 0, j = 0; i < length; ++i)
   {
-    if (buffer[i] == '\0')
+    if (ptr[i] == 0)
     {
-      putenv(&buffer[j]);
+      putenv_os(ptr + j);
       j = i + 1;
     }
   }
 
+  caml_stat_free(ptr);
   return Val_unit;
 }
 

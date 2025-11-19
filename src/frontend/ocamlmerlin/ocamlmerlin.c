@@ -312,7 +312,7 @@ static void start_server(const char *socketname, const char* eventname, const ch
   PROCESS_INFORMATION pi;
   STARTUPINFO si;
   HANDLE hEvent = CreateEvent(NULL, FALSE, FALSE, eventname);
-  DWORD dwResult;
+
   sprintf(buf, "%s server %s %s", exec_path, socketname, eventname);
   ZeroMemory(&si, sizeof(si));
   si.cb = sizeof(si);

@@ -30,7 +30,7 @@ typedef SSIZE_T ssize_t;
 #include <caml/alloc.h>
 #include <caml/threads.h>
 
-#ifdef _MSC_VER
+#ifdef _WIN32
 extern __declspec(dllimport) char **environ;
 #else
 extern char **environ;
